@@ -2,6 +2,7 @@
 Files required for pipeline:
 1) Fasta reference file and its index (For example arabidopsis.fa and arabidopsis.fa.fai)
 2) sorted bam file and its index (For example Chi.bam and Chi.bam.bai)
+
 Steps of pipeline:
 
 A) create pileup file using samtools (set minimum mapq 10):
