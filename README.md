@@ -1,7 +1,7 @@
 # HaploMiner
 Files required for pipeline:
 1) Fasta reference file and its index (For example arabidopsis.fa and arabidopsis.fa.fai)
-2) sorted bam file and its index (For example Chi.bam)
+2) sorted bam file (For example Chi.bam)
 
 Steps of pipeline:
 
