@@ -2,7 +2,7 @@
 Files required for pipeline:
 1) Fasta reference file and its index (For example arabidopsis.fa and arabidopsis.fa.fai)
 2) sorted bam file (For example Chi.bam)
-3)VCF file matches bam file (For example chi.vcf)
+3) VCF file matches bam file (For example chi.vcf)
 
 
 java -Xmx3000m -jar MFbio.jar --task=diploidhap --vcf=chi.vcf --out haplotypes.hap --p1 400 --p2 2 --p3 10 --p4 2 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log </br>
