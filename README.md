@@ -1,7 +1,9 @@
 # HaploMiner
 
 Installation:
+
 Haplominer is cross platform and does not require installation, it only needs java 1.8 or higher environment. Just create a directory and copy MFbio.jar into it.
+
 Files required for pipeline:
 1) Fasta reference file and its index (For example arabidopsis.fa and arabidopsis.fa.fai)
 2) sorted bam file (For example Chi.bam)
