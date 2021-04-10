@@ -766,15 +766,18 @@ step = 5;
         List<TreeNode> out = new ArrayList();
         int node_level = ((SNP)node.content).orderID;
         if (node_level==depth)
-            return out;
+            return out;// no potential children
         TreeNode sibiling = getAlternateNode(node);
-        if (sibiling != null ){
-            for(TreeNode child : graphNodes.get(node_level-1)){
+        if (sibiling != null && sibiling.children.size()>1 ){
+            // both nodes at the next level could be  potential children; the logic behind this is if sibling has got 2 children (one of them cause by wrong mapping of reads) so why not me?
+            for(TreeNode child : graphNodes.get(node_level+1)){
                 out.add(child);
             }
 
         }else{
-            for(TreeNode child : graphNodes.get(node_level-1)){
+            // if there is no sibling, or is a sibling with 0 or 1 childs; 
+            // if there is a sibling with 0 children then both nodes at the next level are potential children
+            for(TreeNode child : graphNodes.get(node_level+1)){
                 if(!child.hasParent)
                     out.add(child);
             }
