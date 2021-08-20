@@ -15,7 +15,7 @@ simcode <- function(str){
   #otherwise
   return(3)
 }
-indblocks <- function(v, el){
+findblocks <- function(v, el){
   #in vector v finds index  of blocks of el
   idx <-numeric(length=0)
   block_start <- -1
