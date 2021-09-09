@@ -10,7 +10,7 @@ Files required for pipeline:
 3) VCF file matches bam file (For example chi.vcf)
 
 
-java -Xmx3000m -jar MFbio.jar --task diploidhap --vcf=chi.vcf --out haplotypes.hap --p1 400 --p2 2 --p3 10 --p4 2 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log </br>
+java -Xmx3000m -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap --p1 400 --p2 2 --p3 10 --p4 2 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log </br>
 Parameter Description:</br>
 vcf: VCF file</br>
 out: output haplotype file</br>
