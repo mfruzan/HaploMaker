@@ -773,19 +773,7 @@ public class Start extends javax.swing.JFrame {
         }
         
         
-        /*
-        
-        Properties prop = new Properties();
-        StringBuffer sb = new StringBuffer();
-        for(int i =0; i<args.length; i++){
-            sb.append(args[i]+"\n");
-        }
-        try {
-            prop.load(new StringReader(sb.toString()));
-        } catch (IOException ex) {
-             System.out.println(ex.getMessage());
-        }
-       */
+       
        //--------------------------------------------
         try{
             
@@ -822,35 +810,7 @@ public class Start extends javax.swing.JFrame {
            vcf = prms.get("vcf");
            out = prms.get("out");
             
-            /*
-           if(prop.getProperty("showform").equals("no")){
-             showForm = false;
-           }
-           //-------------------------------------------
-           task = prop.getProperty("task");
-           host = prop.getProperty("host");
-           srcDir = prop.getProperty("srcdir");
-           destDir = prop.getProperty("destdir");
-           exporterClass = prop.getProperty("class");
-           p1 = prop.getProperty("p1");
-           p2 = prop.getProperty("p2");
-           p3 = prop.getProperty("p3");
-           p4 = prop.getProperty("p4");
-           p5 = prop.getProperty("p5");
-           p6 = prop.getProperty("p6");
-           p7 = prop.getProperty("p7");
-           p8 = prop.getProperty("p8");
-           threads = prop.getProperty("threads");
            
-           mate1File = prop.getProperty("1");
-           mate2File = prop.getProperty("2");
-           unpairedFile = prop.getProperty("U");
-           file1 = prop.getProperty("file1");
-           file2 = prop.getProperty("file2");
-           file3 = prop.getProperty("file3");
-           file4 = prop.getProperty("file4");
-           file5 = prop.getProperty("file5");
-           */
 
         }catch(NullPointerException ex){}
 
