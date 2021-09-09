@@ -193,7 +193,8 @@ public class GenotypeFileProcessor {
                                     //try{
                                       pp.phaseGenomeHaplotypesPairedFastVCF_V2(writer, fsi, ifsi, it, last_contig , snpList,  insert_size, min_mapq, min_hap_len);// 155 is maximum insert size
                                     //}catch (Exception ex){System.out.println("Exception outside phaseGenomeHaplotypesPairedFast " + ex.getMessage());}
-                                } 
+                                } else 
+                                    pp.phaseGenomeHaplotypesSEFast(writer, fsi, ifsi, it, last_contig , snpList,  insert_size, min_mapq, min_hap_len);
                             } // if we have any snp
                             
                         }//if there are at least 2 SNP
@@ -223,7 +224,8 @@ public class GenotypeFileProcessor {
                         //try{
                           pp.phaseGenomeHaplotypesPairedFastVCF_V2(writer, fsi, ifsi, it, last_contig , snpList,  insert_size, min_mapq, min_hap_len);
                         //}catch (Exception ex){System.out.println("Exception outside phaseGenomeHaplotypesPairedFast " + ex.getMessage());}
-                    } 
+                    } else 
+                        pp.phaseGenomeHaplotypesSEFast(writer, fsi, ifsi, it, last_contig , snpList,  insert_size, min_mapq, min_hap_len);
                         
                 } // if we have any snp                
             }
