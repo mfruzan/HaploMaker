@@ -68,13 +68,13 @@ n50 <- function(contig_lens){
   
 }
 
-dfvcf<-read.table("NA12878_sorted_noheader.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
+dfvcf<-read.table("hg19/NA12878_sorted_noheader.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
 #only keep het positiosn
 dfvcf <- dfvcf[dfvcf$V10 %in% c('1|0','0|1','1|2','2|1','0|2','2|0'),]
 dfvcf$snp_num <- c(1:nrow(dfvcf))
 dim(dfvcf)
 #2,490,062  4
-dfhaplominer <-read.table("haplominer_pacbio.hap", colClasses=c("character", "numeric","character","character","character","character") ,header=F, fill=T)
+dfhaplominer <-read.table("NA12878_hifi_haplominer.hap", colClasses=c("character", "numeric","character","character","character","character") ,header=F, fill=T)
 dfhaplominer[dfhaplominer=='']<-NA
 head(dfhaplominer)
 dfhaplominer_rows <-dfhaplominer[!is.na(dfhaplominer$V6), ]
@@ -90,30 +90,30 @@ agg<-aggregate(both~rowfactor, dfmerged, FUN=function(b){switcherror(b)})
 tmp <- dfhaplominer[is.na(dfhaplominer$V6), 2:3]
 haplominer_lens <- as.numeric(tmp$V3)-as.numeric(tmp$V2) + 1
 n50(haplominer_lens)
-#46,787 
+#31,638
 sum(haplominer_lens)
-# 1,728,491,117
+# 1,540,619,001
 length(haplominer_lens)
-#[1] 67,809
+#100,606
 mean(haplominer_lens)
-# 25,490
+#15,313
 max(haplominer_lens)
-#351,891 
+#315,905
 
 ###########################################
 #now estimate haplominer swtich rate per kbp of long haplotype
 length(which(haplominer_lens<1000))
-#3477
+#33,664
 length(which(haplominer_lens>=1000))
-#64332
+#149,746
 agg$len_bp <- haplominer_lens
 agg_long <- agg[agg$len_bp>=2,]
 (sum(agg_long$both)*1000)/sum(agg_long$len_bp)
-#0.0274 Logic9
+#0.00267
 ##########################################################################
 ############################################################################
 #hapcut2
-dfhapcut <- read.table("hapcut2_pruned_pacbio.hap",sep = "\t" , fill=T)
+dfhapcut <- read.table("NA12878_hifi_hapcut2_pruned.hap",sep = "\t" , fill=T)
 dfhapcut[dfhapcut=='']<-NA
 dfhapcut_rows <- dfhapcut[!is.na(dfhapcut$V2) ,c(4,5,2,3)]
 dfhapcut_rows$V4 <- as.character(dfhapcut_rows$V4)
@@ -122,8 +122,9 @@ summary_vec <-which(dfhapcut$V1=="******** ")
 factors3<-  summary_vec - c(0, summary_vec[-length(summary_vec)])  - 2
 factors3 <- c(factors3,2)
 sum(factors3)
+#1,978,496
 nrow(dfhapcut_rows)
-#2,132,787
+#1,978,496
 dfhapcut_rows$V6 <- paste(dfhapcut_rows$V2,"|", dfhapcut_rows$V3, sep="")
 dfhapcut_rows$rownum <- c(1:nrow(dfhapcut_rows))
 dfmerged3 <-merge(dfhapcut_rows,dfvcf, by=c(1,2), all.x=T)
@@ -145,13 +146,13 @@ for(hl in factors3){
 ###########################################
 #now estimate hapcut swtich rate per kbp of long haplotype
 length(which(hapcut_lens<1000))
-#1025
+#2079
 length(which(hapcut_lens>=1000))
-#23,262
+#37,299
 agg3$len_bp <- hapcut_lens
 agg3_long <- agg3[agg3$len_bp>=2,]
 (sum(agg3_long$both)*1000)/sum(agg3_long$len_bp)
-#0.0058
+#0.0010
 #############################################
 #because hapcut2 reports non-continuous SNP as haplotype: we write a code to detect only conitinuous ones:
 v<-dfmerged3$snp_num
@@ -186,23 +187,23 @@ for(fact in factors3){
   start_idx <- start_idx + fact
 }
 n50(hapcut_lens)
-#10,804
+#8,288
 sum(hapcut_lens)
-#1,426,036,974
+#1,149,388,869
 mean(hapcut_lens)
-#4802.344
+#3750.
 max(hapcut_lens)
-#118,473
+#92,696
 max(series3)
-#178
+#110
 length(hapcut_lens)
-#296,946
+#306,442
 
 ###########################################################################################################
 ###########################################################################################################
 #WhatsHap
 
-dfwhatshap<-read.table("whatshap_pacbio.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
+dfwhatshap<-read.table("NA12878_hifi_whatshap.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
 hap.list <- list()
 haplotype_started <- F
 last_pos <- 0 # last position
@@ -243,19 +244,19 @@ dfhwhathaps_rows$V3 <- as.character(dfhwhathaps_rows$V3)
 dfhwhathaps_rows$V4 <- as.integer(dfhwhathaps_rows$V4)
 colnames(dfhwhathaps_rows)[4] <- "rowfactor"
 dim(dfhwhathaps_rows)
-#[1] 2,445,164      4
+#[1] 2,407,735      4
 hap_lens<-aggregate(V1~rowfactor, dfhwhathaps_rows, FUN=length)
 length(which(hap_lens$V1==1))
-#[1] 150,644  haplotypes are with length 1
+#[1] 145,407  haplotypes are with length 1
 #now filter rows that contain hap with length 1
 dfhwhathaps_rows <- dfhwhathaps_rows[!dfhwhathaps_rows$rowfactor %in% hap_lens[hap_lens$V1==1,"rowfactor"] , ]
 dim(dfhwhathaps_rows)
-# 2,294,520      4
+# 2,262,328      4
+
 dfhwhathaps_rows$rownum <- c(1:nrow(dfhwhathaps_rows))
 dfmerged4 <-merge(dfhwhathaps_rows,dfvcf, by=c(1,2), all.x=T)
 dfmerged4 <- dfmerged4[order(dfmerged4$rownum),]
 dup_idx <- which(duplicated(dfmerged4$rownum))
-dfmerged4$both <- paste(dfmerged4$V3,'_',dfmerged4$V10,sep="")
 dfagg4_len<-aggregate(both~rowfactor, dfmerged4, FUN=length)
 # As WhatsHap reports non-continuous SNPs as haplotype: we require code 
 # to detect only continuous ones
@@ -294,20 +295,20 @@ for(fact in agg4_len$both){
 }
 
 n50(whatshap_lens)
-#14,828
+#12,542
 sum(whatshap_lens)
-#1,230,910,625
+#1,148,739,180
 mean(whatshap_lens)
-#4737
+#4,369
 min(whatshap_lens)
 #2
 max(whatshap_lens)
-#265,020
+#183,560
 
 sum(series4)
-#[1] 2,294,520
+#[1] 2,262,328
 max(series4)
-#423
+#374
 table(series4)
 length(which(series4==1))
 #[1] 0
@@ -318,7 +319,7 @@ dfmerged4$hlen <- rep(series4, series4)
 dfmerged4$hlen_bp <- rep(whatshap_lens, series4)
 dfmerged4 <- dfmerged4[dfmerged4$hlen>1,]
 dim(dfmerged4) 
-#[1] 2,294,520      10
+#[1] 2,262,328      10
 #now calculate accuracy 
 agg4<-aggregate(both~rowfactor, dfmerged4, FUN=function(b){switcherror(b)})
 
@@ -326,9 +327,9 @@ agg4<-aggregate(both~rowfactor, dfmerged4, FUN=function(b){switcherror(b)})
 agg4$len_bp <- whatshap_lens
 agg4_long <- agg4[agg4$len_bp>=2,]
 (sum(agg4_long$both)*1000)/sum(agg4_long$len_bp)
-#0.0207
+#0.00453976
 length(which(whatshap_lens<1000))
-#100430
+#101331
 length(which(whatshap_lens>=1000))
-#159368
+#161554
 
