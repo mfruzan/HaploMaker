@@ -1,4 +1,4 @@
-# HaploMiner
+# HaploMaker
 
 Installation:
 
