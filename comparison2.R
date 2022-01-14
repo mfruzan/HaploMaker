@@ -74,7 +74,7 @@ dfvcf <- dfvcf[dfvcf$V10 %in% c('1|0','0|1','1|2','2|1','0|2','2|0'),]
 dfvcf$snp_num <- c(1:nrow(dfvcf))
 dim(dfvcf)
 #2,490,062  4
-dfhaplominer <-read.table("haplominer_pacbio.hap", colClasses=c("character", "numeric","character","character","character","character") ,header=F, fill=T)
+dfhaplominer <-read.table("NA12878_haplomaker_pacbio.hap", colClasses=c("character", "numeric","character","character","character","character") ,header=F, fill=T)
 dfhaplominer[dfhaplominer=='']<-NA
 head(dfhaplominer)
 dfhaplominer_rows <-dfhaplominer[!is.na(dfhaplominer$V6), ]
@@ -113,7 +113,7 @@ agg_long <- agg[agg$len_bp>=2,]
 ##########################################################################
 ############################################################################
 #hapcut2
-dfhapcut <- read.table("hapcut2_pruned_pacbio.hap",sep = "\t" , fill=T)
+dfhapcut <- read.table("NA12878_hapcut2_pruned_pacbio.hap",sep = "\t" , fill=T)
 dfhapcut[dfhapcut=='']<-NA
 dfhapcut_rows <- dfhapcut[!is.na(dfhapcut$V2) ,c(4,5,2,3)]
 dfhapcut_rows$V4 <- as.character(dfhapcut_rows$V4)
@@ -202,7 +202,7 @@ length(hapcut_lens)
 ###########################################################################################################
 #WhatsHap
 
-dfwhatshap<-read.table("whatshap_pacbio.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
+dfwhatshap<-read.table("NA12878_whatshap_pacbio.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
 hap.list <- list()
 haplotype_started <- F
 last_pos <- 0 # last position

@@ -61,12 +61,12 @@ n50 <- function(contig_lens){
   }
   return (-1)
 }
-dfvcf <- read.table("commonmerge_noheader.vcf", header = F, colClasses = c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
+dfvcf <- read.table("NA12877_noheader.vcf", header = F, colClasses = c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
+dfvcf <- dfvcf[dfvcf$V10 %in% c('1|0','0|1','1|2','2|1','0|2','2|0'),]
 dfvcf$snp_num <- c(1:nrow(dfvcf))
-dim(dfvcf)
-#1,890,198  4
+
 ############################## HaploMiner
-dfhaplominer <-read.table("haplominer_commonmerge.hap", colClasses = c("character", "numeric","character","character","character","character"), header = F, fill = T)
+dfhaplominer <-read.table("NA12877_25X_haplomaker.hap", colClasses = c("character", "numeric","character","character","character","character"), header = F, fill = T)
 dfhaplominer[dfhaplominer=='']<-NA
 dfhaplominer_rows <- dfhaplominer[!is.na(dfhaplominer$V6), ]
 factors <- dfhaplominer[is.na(dfhaplominer$V6), 4]
@@ -99,7 +99,7 @@ agg_long <- agg[agg$len_bp>=2,]
 (sum(agg_long$both)*1000)/sum(agg_long$len_bp)
 #0.0321 
 ############################### HapCompass
-dfhapcompass <- read.table("hapcompass_commonmerge_q5.hap", colClasses=c("character","numeric","numeric","numeric","numeric","NULL","character"), header=F, fill=T)
+dfhapcompass <- read.table("NA12877_25X_hapcompass_q3.txt", colClasses=c("character","numeric","numeric","numeric","numeric","NULL","character"), header=F, fill=T)
 #1,173,435
 dfhapcompass[dfhapcompass=='']<-NA 
 summary_vec <-which(!is.na(dfhapcompass$V7))
@@ -170,7 +170,7 @@ mean(hapcompass_lens)
 max(hapcompass_lens)
 # 2770
 ############################### HapCUT2
-dfhapcut <- read.table("hapcut2_commonmerge_q5.hap",sep = "\t" , fill=T)
+dfhapcut <- read.table("NA12877_25X_hapcut2.hap",sep = "\t" , fill=T)
 dfhapcut[dfhapcut=='']<-NA
 dfhapcut_rows <- dfhapcut[!is.na(dfhapcut$V2) ,c(4,5,2,3)]
 dfhapcut_rows$V4 <- as.character(dfhapcut_rows$V4)
@@ -253,7 +253,7 @@ max(hapcut_lens)
 
 ############################### WhatsHap
 
-dfwhatshap<-read.table("whatshap_phased_commonmerge.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
+dfwhatshap<-read.table("NA12877_25X_whatshap_phased.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
 hap.list <- list()
 haplotype_started <- F
 last_pos <- 0 # last position

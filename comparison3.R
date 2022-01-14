@@ -68,13 +68,13 @@ n50 <- function(contig_lens){
   
 }
 
-dfvcf<-read.table("hg19/NA12878_sorted_noheader.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
+dfvcf<-read.table("NA12878_sorted_noheader.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
 #only keep het positiosn
 dfvcf <- dfvcf[dfvcf$V10 %in% c('1|0','0|1','1|2','2|1','0|2','2|0'),]
 dfvcf$snp_num <- c(1:nrow(dfvcf))
 dim(dfvcf)
 #2,490,062  4
-dfhaplominer <-read.table("NA12878_hifi_haplominer.hap", colClasses=c("character", "numeric","character","character","character","character") ,header=F, fill=T)
+dfhaplominer <-read.table("NA12878_hifi_haplomakerr.hap", colClasses=c("character", "numeric","character","character","character","character") ,header=F, fill=T)
 dfhaplominer[dfhaplominer=='']<-NA
 head(dfhaplominer)
 dfhaplominer_rows <-dfhaplominer[!is.na(dfhaplominer$V6), ]
