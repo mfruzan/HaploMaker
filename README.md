@@ -12,8 +12,9 @@ Files required for pipeline:
 ```bash
 java -Xmx3000m -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap --p1 400 --p2 2 --p3 10 --p4 2 --p5 50 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log
 ```
-</br>
+
 ## Parameter Description
+
 `vcf`: VCF file</br>
 `out`: output haplotype file</br>
 `ref`: Reference file</br>
