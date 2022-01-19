@@ -15,7 +15,7 @@ java -Xmx3000m -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.h
 
 ## Parameter Description
 
-`vcf`: VCF file
+`vcf`: VCF file</br>
 `out`: output haplotype file</br>
 `ref`: Reference file</br>
 `refx`: Reference file index</br> 
