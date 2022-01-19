@@ -1,6 +1,6 @@
 # HaploMaker
 
-Installation:
+##Installation:
 
 HaploMaker is cross platform and does not require installation, it only needs java 1.8 or higher environment. Just create a directory and copy MFbio.jar into it.
 
@@ -9,8 +9,10 @@ Files required for pipeline:
 2) sorted bam file (For example Chi.bam)
 3) VCF file matches bam file (For example chi.vcf)
 
-
-java -Xmx3000m -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap --p1 400 --p2 2 --p3 10 --p4 2 --p5 50 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log </br>
+```bash
+java -Xmx3000m -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap --p1 400 --p2 2 --p3 10 --p4 2 --p5 50 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log
+```
+</br>
 Parameter Description:</br>
 vcf: VCF file</br>
 out: output haplotype file</br>
