@@ -18,12 +18,12 @@ java -Xmx3000m -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.h
 `vcf`: VCF file</br>
 `out`: output haplotype file</br>
 `ref`: Reference file</br>
-refx: Reference file index</br> 
-bam: sorted BAM file</br>
-p1: DNA fragment length (In paired-end reads use average of fragments' size in the library, When using single end reads, just use read length here, when using PacBio reads use average length of reads)</br>
-p2: 1 for single end, 2 for paired end reads, 3 for Pacbio subread,s 4 for Pacbio HiFi or CCS reads</br>
-p3: Minimum read quality MAPQ, reads having quality less than p3 will be ignored.</br>
-p4: minimum haplotype size (in number of SNPs) to be reported (This parameter only affects output, minimum value is 2)</br>
-p5: Maximum MapQ , it depends on aligner, for Blasr use 50 and for Minimap2 use 60</br>
+`refx`: Reference file index</br> 
+`bam`: sorted BAM file</br>
+`p1`: DNA fragment length (In paired-end reads use average of fragments' size in the library, When using single end reads, just use read length here, when using PacBio reads use average length of reads)</br>
+`p2`: 1 for single end, 2 for paired end reads, 3 for Pacbio subread,s 4 for Pacbio HiFi or CCS reads</br>
+`p3`: Minimum read quality MAPQ, reads having quality less than p3 will be ignored.</br>
+`p4`: minimum haplotype size (in number of SNPs) to be reported (This parameter only affects output, minimum value is 2)</br>
+`p5`: Maximum MapQ , it depends on aligner, for Blasr use 50 and for Minimap2 use 60</br>
 
 
