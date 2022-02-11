@@ -10,7 +10,7 @@ Files required for pipeline:
 3) VCF file matches bam file (For example chi.vcf)
 
 ```bash
-java -Xmx8g -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap --afl 400 --seqtype pairedend --minmapq 10 --maxmapq 50 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log
+java -Xmx20g -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap --afl 400 --seqtype pairedend --minmapq 10 --maxmapq 50 --ref arabidopsis.fa --refx arabidopsis.fa.fai --bam Chi.bam > out.log
 ```
 
 ## Parameter Description
