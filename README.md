@@ -21,7 +21,7 @@ java -Xmx20g -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap
 `refx`: Reference file index</br> 
 `bam`: sorted BAM file</br>
 `afl`: Average fragment length in base pair (In paired-end reads use average of fragments' size in the library, When using single end reads, just use read length here, when using PacBio reads use average length of reads)</br>
-`seqtype`: `pairedend` for illumina paired-end reads, `clr` for pacbio CLR or subreads, `hifi` for Pacbio HiFi or CCS reads</br>
+`seqtype`: Use `pairedend` for illumina paired-end reads, `clr` for pacbio CLR or subreads and `hifi` for Pacbio HiFi or CCS reads</br>
 `minmapq`: Minimum read quality MAPQ, reads having quality less than `minmapq` will be ignored.</br>
 `maxmapq`: Maximum MapQ , it depends on aligner, for Blasr use 50 and for Minimap2 use 60</br>
 
