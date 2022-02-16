@@ -23,6 +23,6 @@ java -Xmx20g -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap
 `afl`: Average Fragment Length in base pair (In paired-end reads use average of fragments' size in the library, When using single end reads, just use read length here, when using PacBio reads use average length of reads)</br>
 `seqtype`: Use `pairedend` for illumina paired-end reads, `clr` for pacbio CLR or subreads and `hifi` for Pacbio HiFi or CCS reads</br>
 `minmapq`: Minimum read quality MAPQ, reads having quality less than `minmapq` will be ignored.</br>
-`maxmapq`: Maximum MapQ , it depends on aligner, for Blasr use 50 and for Minimap2 and pbmm2 use 60, for Bowtie2 use 42, for BWA use 60 </br>
+`maxmapq`: Maximum MapQ , it depends on aligner, for Blasr use 50, for BWA, Minimap2 and pbmm2 use 60, for Bowtie2 use 42 </br>
 
 
