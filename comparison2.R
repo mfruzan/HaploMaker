@@ -115,6 +115,8 @@ agg_long <- agg[agg$len_bp>=2,]
 #hapcut2
 dfhapcut <- read.table("NA12878_hapcut2_pruned_pacbio.hap",sep = "\t" , fill=T)
 dfhapcut[dfhapcut=='']<-NA
+xidx <- which(dfhapcut$V4=="chrX")
+dfhapcut <- dfhapcut[1:(xidx[1]-2),]
 dfhapcut_rows <- dfhapcut[!is.na(dfhapcut$V2) ,c(4,5,2,3)]
 dfhapcut_rows$V4 <- as.character(dfhapcut_rows$V4)
 dfhapcut_rows$V5 <- as.numeric(dfhapcut_rows$V5)
@@ -123,35 +125,14 @@ factors3<-  summary_vec - c(0, summary_vec[-length(summary_vec)])  - 2
 factors3 <- c(factors3,2)
 sum(factors3)
 nrow(dfhapcut_rows)
-#2,132,787
+#2319066
 dfhapcut_rows$V6 <- paste(dfhapcut_rows$V2,"|", dfhapcut_rows$V3, sep="")
 dfhapcut_rows$rownum <- c(1:nrow(dfhapcut_rows))
 dfmerged3 <-merge(dfhapcut_rows,dfvcf, by=c(1,2), all.x=T)
 dfmerged3 <- dfmerged3[order(dfmerged3$rownum),]
 dup_idx <- which(duplicated(dfmerged3$rownum))
-rowfactor <- rep(c(1:length(factors3)), factors3)
-rowfactor <- c(rowfactor, rowfactor[length(rowfactor)])
-dfmerged3$rowfactor <- rowfactor
-dfmerged3$both <- paste(dfmerged3$V6,'_',dfmerged3$V10,sep="")
-agg3<-aggregate(both~rowfactor, dfmerged3, FUN=function(b){switcherror(b)})
-#work out hapcut_lens
-hapcut_lens <- numeric(length=0)
-sidx <- 0
-for(hl in factors3){
-  tmp <- dfmerged3[sidx+hl,"V5"] - dfmerged3[sidx+1,"V5"] + 1
-  hapcut_lens <- c(hapcut_lens, tmp)
-  sidx <- sidx + hl
-}
-###########################################
-#now estimate hapcut swtich rate per kbp of long haplotype
-length(which(hapcut_lens<1000))
-#1025
-length(which(hapcut_lens>=1000))
-#23,262
-agg3$len_bp <- hapcut_lens
-agg3_long <- agg3[agg3$len_bp>=2,]
-(sum(agg3_long$both)*1000)/sum(agg3_long$len_bp)
-#0.0058
+
+
 #############################################
 #because hapcut2 reports non-continuous SNP as haplotype: we write a code to detect only conitinuous ones:
 v<-dfmerged3$snp_num
@@ -186,18 +167,31 @@ for(fact in factors3){
   start_idx <- start_idx + fact
 }
 n50(hapcut_lens)
-#10,804
+#37,251
 sum(hapcut_lens)
-#1,426,036,974
+#1667855616
 mean(hapcut_lens)
-#4802.344
+#19560
 max(hapcut_lens)
-#118,473
-max(series3)
-#178
-length(hapcut_lens)
-#296,946
+#299882
 
+
+rowfactor <- rep(c(1:length(series3)), series3)
+
+dfmerged3$rowfactor <- rowfactor
+dfmerged3$both <- paste(dfmerged3$V6,'_',dfmerged3$V10,sep="")
+agg3<-aggregate(both~rowfactor, dfmerged3, FUN=function(b){switcherror(b)})
+
+###########################################
+#now estimate hapcut swtich rate per kbp of long haplotype
+length(which(hapcut_lens<1000))
+#9326
+length(which(hapcut_lens>=1000))
+#75939
+agg3$len_bp <- hapcut_lens
+agg3_long <- agg3[agg3$len_bp>=2,]
+(sum(agg3_long$both)*1000)/sum(agg3_long$len_bp)
+#0.0058
 ###########################################################################################################
 ###########################################################################################################
 #WhatsHap
