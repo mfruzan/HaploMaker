@@ -89,7 +89,7 @@ mean(haplominer_lens)
 max(haplominer_lens)
 # 2770
 
-now estimate haplominer swtich rate per kbp of long haplotype
+#now estimate haplominer swtich rate per kbp of long haplotype
 length(which(haplominer_lens<1000))
 #320142
 length(which(haplominer_lens>=1000))
@@ -180,35 +180,14 @@ factors3<-  summary_vec - c(0, summary_vec[-length(summary_vec)])  - 2
 factors3 <- c(factors3,2)
 sum(factors3)
 nrow(dfhapcut_rows)
-#667676
+#1,388,394
 dfhapcut_rows$V6 <- paste(dfhapcut_rows$V2,"|", dfhapcut_rows$V3, sep="")
 dfhapcut_rows$rownum <- c(1:nrow(dfhapcut_rows))
 dfmerged3 <-merge(dfhapcut_rows,dfvcf, by=c(1,2), all.x=T)
 dfmerged3 <- dfmerged3[order(dfmerged3$rownum),]
 dup_idx <- which(duplicated(dfmerged3$rownum))
-rowfactor <- rep(c(1:length(factors3)), factors3)
-dfmerged3$rowfactor <- rowfactor
-dfmerged3$both <- paste(dfmerged3$V6,'_',dfmerged3$V10,sep="")
-agg3<-aggregate(both~rowfactor, dfmerged3, FUN=function(b){switcherror(b)})
+dfmerged3 <-dfmerged3[-dup_idx,] #remove duplicated rows
 
-#work out hapcut_lens
-hapcut_lens <- numeric(length=0)
-sidx <- 0
-for(hl in factors3){
-  tmp <- dfmerged3[sidx+hl,"V5"] - dfmerged3[sidx+1,"V5"] + 1
-  hapcut_lens <- c(hapcut_lens, tmp)
-  sidx <- sidx + hl
-}
-
-#now estimate hapcut swtich rate per kbp of long haplotype
-length(which(hapcut_lens<1000))
-#270,488
-length(which(hapcut_lens>=1000))
-#1721
-agg3$len_bp <- hapcut_lens
-agg3_long <- agg3[agg3$len_bp>=2,]
-(sum(agg3_long$both)*1000)/sum(agg3_long$len_bp)
-#0.0376
 
 # As HapCUT2 reports non-continuous SNPs as haplotype: we require code 
 # to detect only continuous ones
@@ -245,12 +224,29 @@ for(fact in factors3){
 }
 # Estimate N50
 n50(hapcut_lens)
-# 313
+# 420
 mean(hapcut_lens)
-# 224
+# 269
 max(hapcut_lens)
-# 2581
+# 5,985
 
+
+rowfactor <- rep(c(1:length(series3)), series3)
+dfmerged3$rowfactor <- rowfactor
+dfmerged3$both <- paste(dfmerged3$V6,'_',dfmerged3$V10,sep="")
+agg3<-aggregate(both~rowfactor, dfmerged3, FUN=function(b){switcherror(b)})
+
+
+
+#now estimate hapcut swtich rate per kbp of long haplotype
+length(which(hapcut_lens<1000))
+#460144
+length(which(hapcut_lens>=1000))
+#11961
+agg3$len_bp <- hapcut_lens
+agg3_long <- agg3[agg3$len_bp>=2,]
+(sum(agg3_long$both)*1000)/sum(agg3_long$len_bp)
+#0.04757
 ############################### WhatsHap
 
 dfwhatshap<-read.table("NA12877_25X_whatshap_phased.vcf", header=F, colClasses=c("character","numeric","NULL","NULL","NULL","NULL","NULL","NULL","NULL","character"))
