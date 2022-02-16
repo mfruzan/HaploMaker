@@ -167,7 +167,7 @@ for(fact in factors3){
 n50(hapcut_lens)
 #14,081
 sum(hapcut_lens)
-#1,345,696,658
+#1,345,696,694
 mean(hapcut_lens)
 #6,816
 
