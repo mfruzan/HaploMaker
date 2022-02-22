@@ -751,6 +751,11 @@ public class Start extends javax.swing.JFrame {
         String refx = null;
         String vcf = null;
         String out = null;
+        String minmapq =null;  
+        String maxmapq =null;  
+        String seqtype =null;  
+        String afl = null; //average fragment length 
+                     
         
         
         // developed on 30/9/2020 to be able to read parameters like --showform no rather than showform=no
@@ -809,7 +814,10 @@ public class Start extends javax.swing.JFrame {
            bamx = prms.get("bamx");
            vcf = prms.get("vcf");
            out = prms.get("out");
-            
+           minmapq =prms.get("minmapq");;  
+           maxmapq =prms.get("maxmapq");;  
+           seqtype =prms.get("seqtype");;  
+           afl = prms.get("afl");; //averag                     
            
 
         }catch(NullPointerException ex){}
@@ -825,35 +833,47 @@ public class Start extends javax.swing.JFrame {
 
            if (task.equals("diploidhap")){
                 //written 4/6/2019
-                // This task accepts one bam file and vcf file  and finds haplotypes and writes them
-                
-                
-                if(vcf == null || out == null || p1==null || p2 ==null || ref==null || refx==null ||  bam==null ){
-                   System.out.println("'All following parameters are required: 'srcdir', 'destDir', '1', '2', 'p1' , 'p2', 'file1'");  
+               if(vcf == null || out == null || afl==null || seqtype ==null || ref==null || refx==null ||  bam==null ){
+                   System.out.println("'All following parameters are required: 'vcf', 'bam', 'ref, 'refx', 'out' , 'afl', 'seqtype'");  
                    System.exit(1);                     
                 }
                 //vcf = VCF file (ordered by chromosome and position)
                 //out= generated haplotype file
-                //p1 = max insert size   make sure it is at least the size of a read
-                //p2 = 1=single-end 2=paired-end
-                //p3 : min mapq. Used to separate low quality alignment in bam file (must be consistent with parameter used to generate genotype/vcf file)
-                //p4: minimum haplotype size to be reported
+                //afl = average fragment length
+                //seqtype = pairedend  clr  hifi
+                //minmapq (optional, default 2).
+                //maxmapq depends on aligner (optional, default 40).
+ 
+       
                 
                
                 
                 //ref=fasta reference file
                 //refx=fasta index file
                 
-                //bam=bam file  for sample
-               
+                //bam=paired-end bam file  for sample
                 
+               //file1(optional) = file of read names(one read name per line)
+                int max_mapq= 40;
+                if (maxmapq!=null)
+                    max_mapq = Integer.parseInt(maxmapq);
+                int min_mapq= 2;
+                if (minmapq!=null)
+                    min_mapq = Integer.parseInt(minmapq);
+       
+                
+                int avg_seq_len  = Integer.parseInt(afl);
                 
                 boolean paired = false;
-                if (Integer.parseInt(p2)==2)
+                if (seqtype.toLowerCase().equals("pairedend"))
                     paired = true;
+                boolean highError = false;
+                if (seqtype.toLowerCase().equals("clr") || seqtype.toLowerCase().equals("subreads"))// pacbio subreads (clr) considered high error
+                    highError = true;
+                
                 
                GenotypeFileProcessor processor = new GenotypeFileProcessor();
-               processor.constructAllHaplotypeBlocksVCF(ref, refx, vcf, out, bam, Integer.parseInt(p1), paired, Integer.parseInt(p3), Integer.parseInt(p4)); 
+               processor.constructAllHaplotypeBlocksVCF(ref, refx, vcf, out, bam, file1, avg_seq_len, paired, min_mapq, 2, max_mapq, highError); 
 
                 System.out.println("Done.");
             }
