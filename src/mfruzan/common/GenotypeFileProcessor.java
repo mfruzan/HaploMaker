@@ -134,7 +134,7 @@ public class GenotypeFileProcessor {
     }
     
    
-    public void constructAllHaplotypeBlocksVCF(String ref_file, String refIndex, String variantFile, String outputFile, String bamFile, int insert_size, boolean paired, int min_mapq, int min_hap_len){
+    public void constructAllHaplotypeBlocksVCF(String ref_file, String refIndex, String variantFile, String outputFile, String bamFile, String read_names_file, int insert_size, boolean paired, int min_mapq, int min_hap_len, int max_mapq, boolean highError){
         // This method is good when there is more than one DNA strand or haplotype, mapped to the reference 
         //(In human, where 2 DNA strands are mapped the the same reference, so we use this method. 
         // In wheat if our reference is not heomeolog specific or wheat is heterozygous then we use this method)        
