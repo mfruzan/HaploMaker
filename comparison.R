@@ -83,11 +83,11 @@ agg <- aggregate(both ~ rowfactor, dfmerged, FUN=function(b)switcherror(b))
 tmp <- dfhaplominer[is.na(dfhaplominer$V6), 2:3]
 haplominer_lens <- as.numeric(tmp$V3)-as.numeric(tmp$V2) + 1
 n50(haplominer_lens)
-#326
+#496
 mean(haplominer_lens)
-# 251
+# 326
 max(haplominer_lens)
-# 2770
+# 26,188
 
 #now estimate haplominer swtich rate per kbp of long haplotype
 length(which(haplominer_lens<1000))
@@ -97,7 +97,7 @@ length(which(haplominer_lens>=1000))
 agg$len_bp <- haplominer_lens
 agg_long <- agg[agg$len_bp>=2,]
 (sum(agg_long$both)*1000)/sum(agg_long$len_bp)
-#0.0321 
+#0.038 
 ############################### HapCompass
 dfhapcompass <- read.table("NA12877_25X_hapcompass_q3.txt", colClasses=c("character","numeric","numeric","numeric","numeric","NULL","character"), header=F, fill=T)
 #1,173,435
@@ -127,7 +127,7 @@ length(which(hapcompass_lens>=1000))
 agg2$len_bp <- hapcompass_lens
 agg2_long <- agg2[agg2$len_bp>=2,]
 (sum(agg2_long$both)*1000)/sum(agg2_long$len_bp)
-#0.1439
+#0.1579
 
 # As HapCompass reports non-continuous SNPs as haplotype: we require code 
 # to detect only continuous ones
@@ -164,11 +164,11 @@ for(fact in factors2){
 }
 # Estimate N50
 n50(hapcompass_lens)
-# 329
+# 494
 mean(hapcompass_lens)
-# 246
+# 326
 max(hapcompass_lens)
-# 2770
+# 26,188
 ############################### HapCUT2
 dfhapcut <- read.table("NA12877_25X_hapcut2.hap",sep = "\t" , fill=T)
 dfhapcut[dfhapcut=='']<-NA
@@ -342,11 +342,11 @@ for(fact in agg4_len$both){
 }
 
 n50(whatshap_lens)
-#329
+#459
 mean(whatshap_lens)
-#252
+#307
 max(whatshap_lens)
-#2770
+#14,399
 
 #after splitting based on continuous SNP, some haplotype with length 1 will be generated, we remove them again from dfmerged4
 
@@ -359,4 +359,4 @@ agg4<-aggregate(both~rowfactor, dfmerged4, FUN=function(b){switcherror(b)})
 agg4$len_bp <- whatshap_lens
 agg4_long <- agg4[agg4$len_bp>=2,]
 (sum(agg4_long$both)*1000)/sum(agg4_long$len_bp)
-#0.0842
+#0.0772
