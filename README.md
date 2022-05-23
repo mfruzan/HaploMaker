@@ -24,5 +24,6 @@ java -Xmx20g -jar MFbio.jar --task diploidhap --vcf chi.vcf --out haplotypes.hap
 `seqtype`: Use `pairedend` for illumina paired-end reads, `clr` for pacbio CLR or subreads and `hifi` for Pacbio HiFi or CCS reads</br>
 `minmapq`: Minimum read quality MAPQ, reads having quality less than `minmapq` will be ignored.</br>
 `maxmapq`: Maximum MapQ , it depends on aligner, for Blasr use 50, for BWA, Minimap2 and pbmm2 use 60, for Bowtie2 use 42 </br>
+`Xmx` is Java related parameter and controls maximum amount of memory used by Java, adjust it based on memory installed on the machine.
 
 
